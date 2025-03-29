@@ -1,0 +1,47 @@
+# config file for SUD differential expression
+# analysis (DEA)
+
+# dataset information
+#
+# input DEA-ready data parent directory (relative to root)
+input_dea_data_dir: 'data' #USED
+# DEA output directory (relative to root)
+output_dea_data_dir: 'results/sud_dea_results' # USED
+# subdirectory with DEA-formatted data
+dea_deseq_formatted_data_dir: 'dea__finalized_major_cell_type' # USED
+# subdirectory with DESeq2-ready files
+dea_ready_deseq_formatted_data_dir: 'diffexpr_ready_files' # USED
+# file name tag for DEA-formatted files # USED
+dea_ready_deseq_formatted_data_fn_tag: ''
+# subdirectory with DEA result files # USED
+dea_results_dir: 'wald_test_results/finalized_major_cell_type_groups'
+
+# differential expression analysis parameters
+#
+# test condition
+dea_test_condition: 'hiv_sud_status' # USED
+#
+# condition comparison list
+dea_cond_comparison_list: # USED
+        - ['hiv_sud_status','neg_y','neg_n']
+#
+# any additional covariates to ignore for the
+# current specific comparison list
+dea_addtl_covariates_to_ignore_curr_comparison: 'None' # USED
+
+# DESeq2 fitting parameters
+#
+# test type ('Wald', 'LRT')
+dea_test_type: 'Wald' # USED
+# Whether to use
+# precomputed size factors for DEA
+use_external_size_factors: False # USED
+# Whether to use a T-distribution
+# for gene dispersion fitting
+use_t_deseq2: False # USED
+# Minimum mu value used by DESeq2
+# for fitting (if 'None' DESeq2's
+# default value will be used)
+min_mu_deseq2: 'None' # USED
+
+root_dir: '/sc/arion/projects/motor/WILSOA28/demuxlet_analysis/snrnaseq__04_run_deseq2'

@@ -1,0 +1,180 @@
+Sender: LSF System <lsfadmin@lh06c25>
+Subject: Job 176485988: </sc/arion/projects/motor/WILSOA28/demuxlet_analysis/snrnaseq__04_run_deseq2/log_files/run_04_deseq2__0> in cluster <chimera> Done
+
+Job </sc/arion/projects/motor/WILSOA28/demuxlet_analysis/snrnaseq__04_run_deseq2/log_files/run_04_deseq2__0> was submitted from host <li04e04> by user <wilsoa28> in cluster <chimera> at Fri Mar 28 20:28:43 2025
+Job was executed on host(s) <10*lh06c25>, in queue <premium>, as user <wilsoa28> in cluster <chimera> at Fri Mar 28 20:28:46 2025
+</hpc/users/wilsoa28> was used as the home directory.
+</sc/arion/projects/motor/WILSOA28/demuxlet_analysis/snrnaseq__04_run_deseq2> was used as the working directory.
+Started at Fri Mar 28 20:28:46 2025
+Terminated at Fri Mar 28 20:30:36 2025
+Results reported at Fri Mar 28 20:30:36 2025
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+#BSUB -P acc_motor # project name
+#BSUB -q premium # queue name ('premium' is standard on Minerva)
+#BSUB -n 10 # number of tasks in a parallel job (also submits as a parallel job)
+#BSUB -R span[hosts=1] # resource requirements
+#BSUB -R rusage[mem=20000] # resource requirements
+#BSUB -W 10:00 # job runtime limit (HH:MM)
+#BSUB -J /sc/arion/projects/motor/WILSOA28/demuxlet_analysis/snrnaseq__04_run_deseq2/log_files/run_04_deseq2__0
+#BSUB -o /sc/arion/projects/motor/WILSOA28/demuxlet_analysis/snrnaseq__04_run_deseq2/log_files/run_04_deseq2__0.o
+#BSUB -e /sc/arion/projects/motor/WILSOA28/demuxlet_analysis/snrnaseq__04_run_deseq2/log_files/run_04_deseq2__0.e
+#BSUB -L /bin/bash
+
+set -ev
+
+# 01. Set up environment
+# 01a. Activate conda environment
+ml anaconda3/2020.11
+ml -python
+source /hpc/packages/minerva-centos7/anaconda3/2020.11/etc/profile.d/conda.sh
+conda activate diffexpr
+
+# 01b. Get root directory
+exec_dir=$( pwd )
+cd "${exec_dir}"
+sud_dea_dir="${exec_dir}/scripts"
+
+# 02. Set up config files
+# 02a. Specify config file path
+cfg="${exec_dir}/configs/config_run_DESeq2_example_SUD_DEA.yaml"
+echo "${cfg}"
+# 02b. Add root directory to config file if not specified
+if ! $( grep -q 'root_dir' ${cfg} ); then
+	echo "Initializing config file with current directory as root directory"
+	echo "root_dir: '${exec_dir}'" >> ${cfg}
+else
+	echo "Config file already contains root directory; proceeding"
+fi
+
+# 03. Specify cell type(s) being processed (separately) with DESeq2 (comma-separated list)
+group="dopaminergic_neuron"
+
+# 04. Run DEA
+# 04a. Specify random seed file locations
+rs_dir="${exec_dir}/data/random_state_files/dea_random_seed_files"
+rs_fn_tag="sud"
+# 04b. Specify number of folds for k-fold cross-validation
+nfolds="2"
+for fold in $(seq 1 ${nfolds}); do
+	rsfn="${rs_dir}/dea_rand_seed__${rs_fn_tag}__${group}__${fold}.txt"
+	rscurr=$( cat "${rsfn}" )
+
+(... more ...)
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   343.46 sec.
+    Max Memory :                                 1067 MB
+    Average Memory :                             809.25 MB
+    Total Requested Memory :                     200000.00 MB
+    Delta Memory :                               198933.00 MB
+    Max Swap :                                   -
+    Max Processes :                              4
+    Max Threads :                                15
+    Run time :                                   111 sec.
+    Turnaround time :                            113 sec.
+
+The output (if any) follows:
+
+/sc/arion/projects/motor/WILSOA28/demuxlet_analysis/snrnaseq__04_run_deseq2/configs/config_run_DESeq2_example_SUD_DEA.yaml
+Config file already contains root directory; proceeding
+Running SUD DEA for fold 1 with random seed 1835412097
+
+R version 4.1.3 (2022-03-10) -- "One Push-Up"
+Copyright (C) 2022 The R Foundation for Statistical Computing
+Platform: x86_64-conda-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+Packages imported.
+Current output directory:
+/sc/arion/projects/motor/WILSOA28/demuxlet_analysis/snrnaseq__04_run_deseq2/results/sud_dea_results/dea__finalized_major_cell_type/wald_test_results/finalized_major_cell_type_groups
+Powered condition file name tag:
+	powered_conditions
+Directory being searched for powered condition file:
+	/sc/arion/projects/motor/WILSOA28/demuxlet_analysis/snrnaseq__04_run_deseq2/data/dea__finalized_major_cell_type/diffexpr_ready_files/dopaminergic_neuron
+Design formula: ~ sex + age + additional_sud_dx + race + ethnicity + od_death + tissue_loc + pmi + hiv_sud_status
+
+Setup complete.
+
+
+Performing DEA on group dopaminergic_neuron, fold 1....
+
+Initializing DESeq object...
+Fitting GLM and performing DEA tests...
+Running DESeq procedure using a Wald test...
+Time to run DESeq procedure = 3.6e+01 seconds.
+
+List of comparisons to test:
+		hiv_sud_status neg_y neg_n
+
+Output directory: /sc/arion/projects/motor/WILSOA28/demuxlet_analysis/snrnaseq__04_run_deseq2/results/sud_dea_results/dea__finalized_major_cell_type/wald_test_results/finalized_major_cell_type_groups/dopaminergic_neuron
+Running SUD DEA for fold 2 with random seed 637754369
+
+R version 4.1.3 (2022-03-10) -- "One Push-Up"
+Copyright (C) 2022 The R Foundation for Statistical Computing
+Platform: x86_64-conda-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+Packages imported.
+Current output directory:
+/sc/arion/projects/motor/WILSOA28/demuxlet_analysis/snrnaseq__04_run_deseq2/results/sud_dea_results/dea__finalized_major_cell_type/wald_test_results/finalized_major_cell_type_groups
+Powered condition file name tag:
+	powered_conditions
+Directory being searched for powered condition file:
+	/sc/arion/projects/motor/WILSOA28/demuxlet_analysis/snrnaseq__04_run_deseq2/data/dea__finalized_major_cell_type/diffexpr_ready_files/dopaminergic_neuron
+Design formula: ~ sex + age + additional_sud_dx + race + ethnicity + od_death + tissue_loc + pmi + hiv_sud_status
+
+Setup complete.
+
+
+Performing DEA on group dopaminergic_neuron, fold 2....
+
+Initializing DESeq object...
+Fitting GLM and performing DEA tests...
+Running DESeq procedure using a Wald test...
+Time to run DESeq procedure = 4e+01 seconds.
+
+List of comparisons to test:
+		hiv_sud_status neg_y neg_n
+
+Output directory: /sc/arion/projects/motor/WILSOA28/demuxlet_analysis/snrnaseq__04_run_deseq2/results/sud_dea_results/dea__finalized_major_cell_type/wald_test_results/finalized_major_cell_type_groups/dopaminergic_neuron
+
+
+PS:
+
+Read file </sc/arion/projects/motor/WILSOA28/demuxlet_analysis/snrnaseq__04_run_deseq2/log_files/run_04_deseq2__0.e> for stderr output of this job.
+
