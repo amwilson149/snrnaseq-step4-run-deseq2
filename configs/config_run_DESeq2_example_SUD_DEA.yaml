@@ -44,4 +44,3 @@ use_t_deseq2: False # USED
 # default value will be used)
 min_mu_deseq2: 'None' # USED
 
-root_dir: '/sc/arion/projects/motor/WILSOA28/demuxlet_analysis/snrnaseq__04_run_deseq2'
